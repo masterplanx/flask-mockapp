@@ -55,6 +55,10 @@ pipeline {
         branch 'master'
       }
       steps {
+	//enable remote triggers
+          script {
+                  properties([pipelineTriggers([pollSCM('H * * * *')])])
+                }
         container('python') {
           dir('./charts/flask-mockapp') {
             sh "jx step changelog --version v\$(cat ../../VERSION)"
